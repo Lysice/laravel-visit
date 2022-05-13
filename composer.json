@@ -1,0 +1,28 @@
+{
+    "name": "lysice/laravel-visit",
+    "description": "a visit tool package for blog.support sync or async mode",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lysice",
+            "email": "snowist@126.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Lysice\\Visits\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0",
+        "predis/predis": "*"
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lysice\\Visits\\VisitServiceProvider"
+            ]
+        }
+    }
+}
