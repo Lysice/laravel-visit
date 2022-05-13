@@ -3,7 +3,6 @@
 namespace Lysice\Visits\Services;
 
 use Lysice\Visits\Models\TopicViews;
-use Lysice\Visits\Service\RedisService;
 
 /**
  * Class VisitService
