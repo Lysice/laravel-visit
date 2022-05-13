@@ -13,7 +13,7 @@
             "Lysice\\Visits\\": "src/",
             "Lysice\\Visits\\Commands": "src/Commands/",
             "Lysice\\Visits\\Models\\": "src/Models/",
-            "Lysice\\Visits\\Services": "src/Services/"
+            "Lysice\\Visits\\Services\\": "src/Services/"
         }
     },
     "require": {
