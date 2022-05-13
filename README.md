@@ -64,3 +64,4 @@ $prefix: 浏览量缓存在redis中 key的前缀 用于与其他实体做区分.
 参数自己设置即可
 $schedule->command('view:syncToDb')->daily()->at('01:00');
 ```
+
