@@ -2,7 +2,6 @@
 
 namespace Lysice\Visits\Services;
 
-use Lysice\Visits\Events\ViewCountEvent;
 use Lysice\Visits\Models\TopicViews;
 use Lysice\Visits\Service\RedisService;
 

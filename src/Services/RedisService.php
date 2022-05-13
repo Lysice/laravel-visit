@@ -1,5 +1,5 @@
 <?php
-namespace Lysice\Visits\Service;
+namespace Lysice\Visits\Services;
 
 use Predis\Client;
 
