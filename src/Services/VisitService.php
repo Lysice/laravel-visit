@@ -20,7 +20,6 @@ class VisitService {
     public static function getViewCount($getViewCount, $id, $increase, $prefix = 't:')
     {
         $viewCount = VisitRedisService::i()->get($prefix . $id);
-
         // 浏览量操作
         // 设置view_count判断 && 缓存view-count被清除 或者为首次设置 或者失效或者被lru清除
         if (isset($getViewCount) && $getViewCount > $viewCount) {
@@ -39,7 +38,6 @@ class VisitService {
         if ($viewCount == 0 && $dbViewCount == 0) {
             $increase = mt_rand(20, 50);
         }
-
         // 浏览量处理
         self::handle($id, $increase, $prefix);
         // set内添加id 便于命令同步
@@ -55,6 +53,7 @@ class VisitService {
         $key = $config['view_key'];
         $count = $config['view_key_limit_count'];
 
+        $prefixId = $prefix . $id;
         /**
          * 为何引入zset? 当超出限制之后 清除一部分数据 防止数据过多导致内存泄漏
          * zset存储数量超过limit后 则执行以下操作:
@@ -71,18 +70,18 @@ class VisitService {
                 $start = intval(ceil($rank * $limit));
                 $instance->pipeline()
                     ->zremrangebyrank($key, $start, $rank)
-                    ->incrby($id, $viewCount)
+                    ->incrby($prefixId, $viewCount)
                     ->zadd($key, [$id => time()])
                     ->execute();
             } else {
                 $instance->pipeline()
-                    ->incrby($id, $viewCount)
+                    ->incrby($prefixId, $viewCount)
                     ->zadd($key, [$id => time()])->execute();
             }
         } else {
             // 管道处理:1.浏览量+1 2.zset 添加数据
             $instance->pipeline()
-                ->incrby($id, $viewCount)
+                ->incrby($prefixId, $viewCount)
                 ->zadd($key, [$id => time()])
                 ->execute();
         }
