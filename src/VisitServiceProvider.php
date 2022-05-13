@@ -25,10 +25,10 @@ class VisitServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/laravel-visit.php' => config_path('laravel-visit.php')
+                __DIR__ . '/config/laravel-visit.php' => config_path('laravel-visit.php')
             ]);
             $this->publishes([
-                __DIR__ . '/../Migrations/2021_12_14_084739_create_topic_views_table.php' => database_path('migrations')
+                __DIR__ . '/Migrations/2021_12_14_084739_create_topic_views_table.php' => database_path('migrations')
             ]);
         }
     }
