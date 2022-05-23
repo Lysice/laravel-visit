@@ -20,4 +20,21 @@ return [
     // mode support:db mode or request mode
     'mode' => 'db',
     'table' => env('LV_TABLE', ''),
+
+    /**
+     * 接口形式对接
+     */
+    // 获取浏览量配置
+    'getCount' => function ($data) {
+        $res = \Wangan\Event\Service\EventService::i()->statistics($data);
+        return $res;
+    },
+    // 同步浏览量配置
+    'syncCount' => function ($data) {
+        $r = \Wangan\Event\Service\EventService::i()->pushEvent($data);
+        return $r;
+    },
+
+    // 异步的延迟分钟数 >0 为异步 否则为同步
+    'sync-delay' => env('LV_SYNC_DELAY', 0),
 ];

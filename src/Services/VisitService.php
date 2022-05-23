@@ -2,6 +2,8 @@
 
 namespace Lysice\Visits\Services;
 
+use Illuminate\Support\Carbon;
+use Lysice\Visits\Jobs\VisitSyncJob;
 use Lysice\Visits\Models\TopicViews;
 
 /**
@@ -9,6 +11,29 @@ use Lysice\Visits\Models\TopicViews;
  * @package App\Service
  */
 class VisitService {
+    public static function eventViewCount($data) {
+        // 1.先增量 后获取
+        $getCount = config('laravel-visit.getCount');
+        $syncCount = config('laravel-visit.syncCount');
+        if(empty($getCount)) {
+            throw new \Exception("获取回调getCount未配置");
+        }
+        if(empty($syncCount)) {
+            throw new \Exception("同步回调syncCount未配置");
+        }
+
+        // 异步
+        $delay = config('laravel-visit.sync-delay');
+        if(config('laravel-visit.sync-delay') > 0) {
+            dispatch(new \Lysice\Visits\Jobs\VisitSyncJob($data, $syncCount($data)))->delay(Carbon::now()->addMinutes($delay));
+        } else {
+            // 同步
+            $syncCount($data);
+        }
+        // 获取
+        return $getCount($data);
+    }
+
     /**
      * 获取浏览量
      * @param $getViewCount
